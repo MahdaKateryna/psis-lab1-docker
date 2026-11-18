@@ -3,50 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Світ Жаб - Головна</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Каталог жаб — База даних</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f4f5f0;
+            color: #1f2922;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 40px;
+            border-bottom: 1px solid #e0e2da;
+            font-size: 14px;
+            color: #556058;
+        }
+        main {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .subtitle {
+            color: #4b554e;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e6f0e8;
+            color: #1b5e20;
+            border: 1px solid #b7d7be;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2e7d32;
+            border-radius: 50%;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #e0e2da;
+            margin: 30px 0;
+        }
+        h2 {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .filter-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5cd;
+            color: #2d3830;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            background: #eef2ec;
+        }
+        .filter-btn.active {
+            background: #1f5132;
+            color: #ffffff;
+            border-color: #1f5132;
+        }
+        .query-info {
+            font-family: monospace;
+            font-size: 13px;
+            color: #6b756e;
+            margin-bottom: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        th, td {
+            text-align: left;
+            padding: 14px 18px;
+            border-bottom: 1px solid #eceee8;
+            font-size: 15px;
+        }
+        th {
+            background-color: #fafbf8;
+            font-weight: 600;
+            color: #37423a;
+        }
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e2da;
+            font-size: 13px;
+            color: #6b756e;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Світ Жаб</div>
-        <nav>
-            <a href="index.html" class="active">Головна</a>
-            <a href="species.html">Види жаб</a>
-            <a href="facts.html">Цікаві факти</a>
-        </nav>
-    </header>
 
-    <main>
-        <section class="hero">
-            <h1>Дивовижний світ амфібій</h1>
-            <p>Жаби — це унікальні земноводні істоти, які мешкають майже по всьому світу та відіграють важливу роль в екосистемі нашої планети.</p>
-            <img src="https://img.wallpapic.com.ua/i5072-425-229/thumb/derevna-zhaba-rajka-chervonooka-tvarini-shpalery.jpg" alt="Зелена жаба">
-        </section>
+<header>
+    <div><strong>Каталог жаб</strong></div>
+    <div><code>web &rarr; api &rarr; db</code></div>
+</header>
 
-        <div class="grid">
-            <div class="card">
-                <div class="card-content">
-                    <h3>Де вони живуть?</h3>
-                    <p>Жаб можна знайти на всіх континентах, окрім Антарктиди. Вони віддають перевагу прісноводним водоймам, вологим тропічним лісам та болотам.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h3>Чим харчуються?</h3>
-                    <p>Більшість дорослих жаб є хижаками. Вони полюють на комах, павуків, хробаків, а деякі великі види можуть їсти навіть дрібних гризунів та риб.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h3>Дихання шкірою</h3>
-                    <p>Жаби вміють дихати не лише легенями, а й шкірою. Щоб цей процес працював, їхня шкіра завжди повинна залишатися вологою.</p>
-                </div>
-            </div>
-        </div>
-    </main>
+<main>
+    <h1>Характеристики видів із бази даних</h1>
+    
+    <div class="status-badge" id="api-status">
+        <span class="dot"></span>
+        <span id="status-text">Перевірка API...</span>
+    </div>
+
+    <hr>
+
+    <h2>Фільтр за типом</h2>
+    <div class="filters">
+        <button class="filter-btn active" onclick="loadFrogs('all', this)">Усі</button>
+        <button class="filter-btn" onclick="loadFrogs('tree', this)">Деревні</button>
+        <button class="filter-btn" onclick="loadFrogs('water', this)">Водні</button>
+        <button class="filter-btn" onclick="loadFrogs('poison', this)">Отруйні</button>
+    </div>
+
+    <div class="query-info" id="query-label">Запит: GET /api/frogs</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Тип</th>
+                <th>Вид жаби</th>
+                <th>Середовище</th>
+                <th>Розмір</th>
+                <th>Отруйність</th>
+            </tr>
+        </thead>
+        <tbody id="frogs-table-body">
+            <tr><td colspan="5">Завантаження даних...</td></tr>
+        </tbody>
+    </table>
 
     <footer>
-        &copy; Лабораторна робота №1
+        Лабораторна робота №3.
     </footer>
+</main>
+
+<script>
+    async function checkApi() {
+        try {
+            const res = await fetch('/api/health');
+            const data = await res.json();
+            if (data.status === 'ok') {
+                document.getElementById('status-text').innerText = `API працює, версія ${data.version}`;
+            }
+        } catch (e) {
+            document.getElementById('status-text').innerText = 'Помилка з’єднання з API';
+        }
+    }
+
+    async function loadFrogs(type, btnElement) {
+        if (btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        const endpoint = type === 'all' ? '/api/frogs' : `/api/frogs?type=${type}`;
+        document.getElementById('query-label').innerText = `Запит: GET ${endpoint}`;
+
+        const tbody = document.getElementById('frogs-table-body');
+        try {
+            const res = await fetch(endpoint);
+            const frogs = await res.json();
+
+            if (frogs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5">Записів не знайдено</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = frogs.map(f => `
+                <tr>
+                    <td><strong>${f.type_name}</strong></td>
+                    <td>${f.species}</td>
+                    <td>${f.habitat}</td>
+                    <td>${f.size}</td>
+                    <td>${f.toxicity}</td>
+                </tr>
+            `).join('');
+        } catch (err) {
+            tbody.innerHTML = '<tr><td colspan="5">Не вдалося отримати дані з бази</td></tr>';
+        }
+    }
+
+    checkApi();
+    loadFrogs('all');
+</script>
+
 </body>
 </html>
